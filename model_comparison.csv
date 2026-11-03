@@ -1,4 +1,0 @@
-Model,MAE,RMSE,Exact Match (%),Within ±1 (%),Avg Inference Time (s)
-YOLOv8n,2.6,3.421,20.0,45.0,0.3191
-YOLO11n,2.4,2.966,15.0,30.0,0.1209
-Faster R-CNN ResNet50 FPN,7.45,9.521,5.0,20.0,0.1664
