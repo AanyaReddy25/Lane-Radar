@@ -1,0 +1,2 @@
+Model,MAE,RMSE,Exact Match (%),Within ±1 (%),Avg Inference Time (s)
+YOLO11n,2.4,2.966,15.0,30.0,0.1164
