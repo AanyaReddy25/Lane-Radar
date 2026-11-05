@@ -63,13 +63,47 @@ The initial target is to achieve an MAE of 2 people or fewer per image, with a l
 
 These targets are project goals and are not assumed to have been achieved by the current models.
 
+#### Evaluation Method
+
+### 1. What Good Performance Means
+
+For Lane Radar, good performance means that the system can count the number of people waiting in a supermarket checkout lane as accurately as possible. The predicted count should be close to the actual number of people so that customers can choose a lane with a shorter queue and save time.
+
+### 2. Evaluation Metrics
+
+To check how well the models perform, I use four evaluation metrics: Mean Absolute Error (MAE), Root Mean Squared Error (RMSE), Exact Match Accuracy, and Within ±1 Accuracy.
+
+MAE measures the average difference between the actual number of people and the predicted number. It is useful because it shows how many people the model is usually off by. RMSE is similar to MAE, but it gives more importance to larger errors. This helps identify cases where the model makes a significantly incorrect prediction.
+
+Exact Match Accuracy measures how often the model predicts the exact number of people in an image. Within ±1 Accuracy checks how often the prediction is either the exact count or differs by only one person. These metrics are useful because even a small counting error can affect the queue time estimation.
+
+### 3. How the Outputs Are Scored
+
+The models are evaluated by comparing their predicted people counts with the actual counts manually assigned to each image. The actual count is used as the reference value. For every image, the model predicts the number of people present, and the difference between the prediction and the actual count is calculated.
+
+The results are then used to calculate the evaluation metrics. I use the same evaluation dataset for YOLOv8n, YOLO11n, and Faster R-CNN so that their performance can be compared fairly. No AI judge or human scoring system is used during the evaluation. The scores are calculated directly using Python.
+
+### 4. Evaluation Dataset
+
+The evaluation dataset contains 20 images of supermarket checkout queues. The images are stored in the `data/eval_images` folder, and their actual people counts are recorded in `data/eval_dataset.csv`.
+
+The dataset includes different queue sizes and situations where people may be close together or partially hidden behind other people. These cases can make people detection more difficult. The dataset is used to test how well the models work under different queue conditions.
+
+Although the dataset is small, it provides a starting point for comparing the three models. In the future, more images from different supermarket environments can be added to improve the evaluation.
+
+### 5. Target Score
+
+By the final submission, I aim to achieve an MAE of 2.0 or lower and a Within ±1 Accuracy of at least 60%. I also aim to improve the Exact Match Accuracy to 25% or higher. These targets will help me understand whether the models are improving and which model is more suitable for Lane Radar.
+
+The main goal is to select a model that provides reliable people counts and can be used as a starting point for estimating supermarket checkout waiting times.
+
 ## 3. Model Evaluation Results
 
-| Model | MAE | RMSE | Exact Match (%) | Within ±1 (%) | Avg. Inference Time (s) |
-|---|---:|---:|---:|---:|---:|
-| YOLOv8n | 2.60 | 3.421 | 20.0 | 45.0 | 0.3191 |
-| YOLO11n | 2.40 | 2.966 | 15.0 | 30.0 | 0.1209 |
-| Faster R-CNN ResNet50 FPN | 7.45 | 9.521 | 5.0 | 20.0 | 0.1664 |
+| Model | MAE | RMSE | Exact Match (%) | Within ±1 (%) | Average Inference Time (s) | Cost per 1,000 Requests |
+|---|---:|---:|---:|---:|---:|---:|
+| YOLOv8n | 2.60 | 3.421 | 20.0 | 45.0 | 0.3191 | $0 estimated API cost |
+| YOLO11n | 2.40 | 2.966 | 15.0 | 30.0 | 0.1209 | $0 estimated API cost |
+| Faster R-CNN ResNet50 FPN | 7.45 | 9.521 | 5.0 | 20.0 | 0.1664 | $0 estimated API cost |
 
 ### 3.1 Model Selection
 
@@ -91,9 +125,9 @@ This estimate excludes Google Colab, GPU, cloud infrastructure, storage, and oth
 
 ## 4. Iteration Log
 
-| Iteration | Evaluation | Change Made | Result / Learning |
+| Date | What Changed | Score | What I Learned |
 |---|---|---|---|
-| 1 | Baseline evaluation of YOLOv8n, YOLO11n, and Faster R-CNN on 20 images | Pretrained models evaluated using the same dataset and counting criteria | YOLO11n achieved the lowest MAE. Crowded and overlapping scenes produced larger errors. |
+| 2026-11-05 | Baseline evaluation of YOLOv8n, YOLO11n, and Faster R-CNN using the same 20-image evaluation dataset. | YOLO11n MAE: 2.40, RMSE: 2.966 | YOLO11n achieved the lowest MAE and RMSE. Crowded and overlapping scenes caused larger counting errors. |
 
 No model fine-tuning or parameter optimization was performed during this evaluation. Future iterations should investigate confidence thresholds, fine-tuning, and dataset expansion.
 
