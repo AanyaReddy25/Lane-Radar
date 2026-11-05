@@ -52,6 +52,7 @@ Dataset files:
 ## Repository Structure
 
 ```text
+
 Lane-Radar/
 ├── data/
 │   ├── eval_dataset.csv
@@ -61,8 +62,14 @@ Lane-Radar/
 │   ├── model_evaluation.csv
 │   ├── model_comparison.csv
 │   └── YOLO11n_evaluation.csv
+├── src/
+│   ├── core.py
+│   └── evaluate.py
+├── lane_radar.ipynb
 ├── README.md
-└── REPORT.md
+├── REPORT.md
+└── LICENSE
+
 ```
 
 ## Installation
@@ -105,6 +112,42 @@ The current evaluation uses only 20 images and pretrained models. The system est
 ## Report
 
 Detailed methodology, results, model selection, limitations, and error analysis are available in `REPORT.md`.
+
+
+## Running the Evaluation Script
+
+The evaluation script supports three pretrained models.
+
+### Run YOLO11n (default)
+
+```bash
+python src/evaluate.py --model yolo11n
+```
+
+### Run YOLOv8n
+
+```bash
+python src/evaluate.py --model yolov8n
+```
+
+### Run Faster R-CNN
+
+```bash
+python src/evaluate.py --model fasterrcnn
+```
+
+The script evaluates the model on the evaluation dataset and calculates:
+
+- Mean Absolute Error (MAE)
+- Root Mean Squared Error (RMSE)
+- Exact Match Accuracy
+- Within ±1 Accuracy
+- Average Inference Time
+
+Evaluation results are saved in the `results/` directory.
+
+The model can be changed using the `--model` argument without modifying the source code.
+
 
 
 
