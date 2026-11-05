@@ -1,69 +1,112 @@
-# Lane Radar 
 
-### Smart Queue and Checkout Time Estimation Using Computer Vision
+# Lane Radar
+## Smart Queue and Checkout Time Estimation
 
-Lane Radar is a computer vision project designed to estimate supermarket checkout queue sizes by detecting people in images. The project evaluates different pretrained object detection models to identify their performance in people counting.
+Lane Radar is a computer vision project that estimates the number of people waiting at supermarket checkout lanes using pretrained object detection models.
 
-##  Project Objectives
+The project compares YOLOv8n, YOLO11n, and Faster R-CNN ResNet50 FPN to identify a suitable model for checkout queue estimation.
 
-- Detect people in supermarket checkout and queue images.
-- Estimate the number of people in each queue.
-- Compare multiple pretrained object detection models.
-- Evaluate model accuracy and inference speed.
-- Identify a suitable model for future checkout time estimation.
+## Project Objectives
 
-##  Technologies Used
+- Detect people in supermarket checkout images.
+- Estimate the number of people in checkout queues.
+- Evaluate and compare pretrained object detection models.
+- Identify a suitable model for future checkout-time estimation.
+
+## Models Evaluated
+
+- YOLOv8n
+- YOLO11n
+- Faster R-CNN ResNet50 FPN
+
+## Evaluation Results
+
+| Model | MAE | RMSE | Exact Match (%) | Within ±1 (%) |
+|---|---:|---:|---:|---:|
+| YOLOv8n | 2.60 | 3.421 | 20.0 | 45.0 |
+| YOLO11n | 2.40 | 2.966 | 15.0 | 30.0 |
+| Faster R-CNN ResNet50 FPN | 7.45 | 9.521 | 5.0 | 20.0 |
+
+YOLO11n achieved the lowest MAE and RMSE in the evaluation.
+
+## Dataset
+
+The evaluation dataset contains 20 supermarket checkout images with manually assigned ground-truth people counts.
+
+Dataset files:
+- `data/eval_dataset.csv`
+- `data/eval_images/`
+- `data/compressed_images/`
+
+## Technologies Used
 
 - Python
 - Google Colab
 - PyTorch
-- Torchvision
 - Ultralytics YOLO
-- YOLOv8n
-- YOLO11n
-- Faster R-CNN ResNet50 FPN
+- Torchvision
+- OpenCV
 - Pandas
 - NumPy
-- Matplotlib
-- OpenCV
 
-##  Model Evaluation
+## Repository Structure
 
-The project evaluates three pretrained object detection models using a dataset of 20 supermarket checkout and queue images.
+```text
+Lane-Radar/
+├── data/
+│   ├── eval_dataset.csv
+│   ├── eval_images/
+│   └── compressed_images/
+├── results/
+│   ├── model_evaluation.csv
+│   ├── model_comparison.csv
+│   └── YOLO11n_evaluation.csv
+├── README.md
+└── REPORT.md
+```
 
-The evaluation metrics include:
+## Installation
+
+Install the required libraries:
+
+```bash
+pip install ultralytics torch torchvision pandas numpy pillow
+```
+
+## Running the Project
+
+1. Open the project notebook in Google Colab.
+2. Upload or extract the Lane Radar project files.
+3. Install the required dependencies.
+4. Run the notebook cells in order.
+5. Evaluate the models on the 20-image dataset.
+6. View the evaluation metrics and comparison CSV files in the `results/` directory.
+
+## Evaluation Metrics
 
 - Mean Absolute Error (MAE)
 - Root Mean Squared Error (RMSE)
 - Exact Match Accuracy
-- Accuracy Within ±1 Person
+- Within ±1 Accuracy
 - Average Inference Time
 
-### Models Evaluated
+## Limitations
 
-| Model | Description |
-|---|---|
-| YOLOv8n | Lightweight object detection model |
-| YOLO11n | Updated YOLO object detection model |
-| Faster R-CNN ResNet50 FPN | Region-based object detection model |
+The current evaluation uses only 20 images and pretrained models. The system estimates people counts but does not yet predict actual checkout waiting time.
 
-##  Project Contents
+## Future Work
 
-The complete project, including the evaluation dataset, model comparison results, evaluation outputs, and project documentation, is available in the ZIP file uploaded to this repository.
+- Expand the evaluation dataset.
+- Fine-tune the object detection models.
+- Improve counting in crowded scenes.
+- Estimate checkout waiting time.
+- Develop a real-time checkout lane monitoring interface.
 
-##  Future Enhancements
+## Report
 
-- Improve people detection in crowded checkout queues.
-- Incorporate shopping basket and cart load estimation.
-- Estimate checkout waiting times.
-- Develop a real-time checkout lane monitoring dashboard.
-- Display queue information on digital overhead boards.
+Detailed methodology, results, model selection, limitations, and error analysis are available in `REPORT.md`.
 
-##  Project Information
 
-**Project Name:** Lane Radar  
-**Domain:** Computer Vision and Artificial Intelligence  
-**Project Type:** Model Evaluation and Smart Queue Estimation  
-**Repository:** Lane-Radar
+
 
 
